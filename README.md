@@ -10,4 +10,4 @@ Somos Miguel Angel Tovar y Juan David Caviedes, estudiantes de Ingeniería Mecat
 
 Nos apasiona combinar el mundo del hardware con el software, y estamos constantemente aprendiendo nuevas herramientas para llevar nuestros proyectos al siguiente nivel.
 
-Este repositorio contiene el desarrollo del proyecto de la clase de Programación Avanzada, donde buscamos aplicar nuestros conocimientos en programación e integrarlos con nuestra formación en sistemas mecánicos y neumáticos.
+Este repositorio contiene el desarrollo del proyecto de la clase de Programación Avanzada, donde buscamos aplicar nuestros conocimientos en programación e integrarlos con nuestra formación en ingenieria Mecatronica.
