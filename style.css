@@ -1,4 +1,5 @@
-/* Estilo general */
+/* ESTILO GENERAL */
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -6,7 +7,9 @@ body {
     color: #222;
 }
 
-/* Encabezado */
+
+/* ENCABEZADO */
+
 header {
     background: #0066cc;
     color: white;
@@ -14,9 +17,17 @@ header {
     padding: 20px;
 }
 
-header h1 {
-    margin: 0;
+.logo {
+    width: 120px;
+    height: auto;
 }
+
+header h1 {
+    margin: 5px;
+}
+
+
+/* MENÚ */
 
 nav {
     margin-top: 15px;
@@ -28,7 +39,9 @@ nav a {
     margin: 10px;
 }
 
-/* Secciones */
+
+/* SECCIONES */
+
 section {
     background: white;
     margin: 20px auto;
@@ -41,18 +54,69 @@ h2 {
     color: #0066cc;
 }
 
-/* Servicios */
-li {
-    margin: 10px;
-}
 
-/* Inicio */
+/* IMAGEN PRINCIPAL */
+
 #inicio {
     text-align: center;
-    background: #eaf4ff;
 }
 
-/* Pie de página */
+#inicio img {
+    width: 100%;
+    max-width: 600px;
+    border-radius: 10px;
+}
+
+
+/* SERVICIOS */
+
+.servicios {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.servicio {
+    text-align: center;
+}
+
+.servicio img {
+    width: 200px;
+    height: 130px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/* PROYECTOS */
+
+.proyecto {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 30px;
+
+    margin: 20px 0;
+    padding: 15px;
+
+    background: #f4f8fc;
+    border-radius: 10px;
+}
+
+.texto-proyecto {
+    flex: 1;
+}
+
+.proyecto img {
+    width: 250px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+
+/* PIE DE PÁGINA */
+
 footer {
     background: #003b73;
     color: white;
@@ -60,8 +124,11 @@ footer {
     padding: 15px;
 }
 
-/* Adaptación para celular */
+
+/* CELULARES */
+
 @media (max-width: 600px) {
+
     nav a {
         display: block;
         margin: 8px;
@@ -70,4 +137,24 @@ footer {
     section {
         margin: 10px;
     }
+
+    .servicios {
+        display: block;
+    }
+
+    .servicio {
+        margin-bottom: 20px;
+    }
+
+    .proyecto {
+        display: block;
+        text-align: center;
+    }
+
+    .proyecto img {
+        width: 100%;
+        max-width: 300px;
+    }
+
 }
+
