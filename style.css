@@ -1,0 +1,73 @@
+/* Estilo general */
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background: #f4f8fc;
+    color: #222;
+}
+
+/* Encabezado */
+header {
+    background: #0066cc;
+    color: white;
+    text-align: center;
+    padding: 20px;
+}
+
+header h1 {
+    margin: 0;
+}
+
+nav {
+    margin-top: 15px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    margin: 10px;
+}
+
+/* Secciones */
+section {
+    background: white;
+    margin: 20px auto;
+    padding: 25px;
+    max-width: 900px;
+    border-radius: 10px;
+}
+
+h2 {
+    color: #0066cc;
+}
+
+/* Servicios */
+li {
+    margin: 10px;
+}
+
+/* Inicio */
+#inicio {
+    text-align: center;
+    background: #eaf4ff;
+}
+
+/* Pie de página */
+footer {
+    background: #003b73;
+    color: white;
+    text-align: center;
+    padding: 15px;
+}
+
+/* Adaptación para celular */
+@media (max-width: 600px) {
+    nav a {
+        display: block;
+        margin: 8px;
+    }
+
+    section {
+        margin: 10px;
+    }
+}
