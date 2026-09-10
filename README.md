@@ -29,7 +29,7 @@ El proyecto es desarrollado por:
 
 EVAH ofrece servicios relacionados con:
 
-- Mantenimiento eléctrico automotriz.
+- Escaneo de los sistemas vehiculares.
 - Diagnóstico de sistemas eléctricos.
 - Diagnóstico de sistemas electrónicos.
 - Revisión de sistemas vehiculares.
