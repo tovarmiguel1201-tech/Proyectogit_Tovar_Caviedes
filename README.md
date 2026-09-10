@@ -1,6 +1,6 @@
 # EVAH – Electrónica Vehicular
 
-![EVAH](img/logo.png)
+![EVAH](img/logo--evah.jpg)
 
 ## 🚗 Sobre el proyecto
 
