@@ -11,7 +11,7 @@ body {
 /* ENCABEZADO */
 
 header {
-    background: #005fcc;
+    background: #cc0000;
     color: white;
     text-align: center;
     padding: 20px;
@@ -51,7 +51,7 @@ section {
 }
 
 h2 {
-    color: #0066cc;
+    color: #cc0000;
 }
 
 
