@@ -1,0 +1,457 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EVAH | Gestión de servicios</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f6fb;
+      color: #1e293b;
+    }
+
+    header {
+      background: #123b72;
+      color: white;
+      padding: 25px 7%;
+    }
+
+    header h1 {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    header p {
+      color: #dbeafe;
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 35px auto;
+      padding: 0 20px;
+    }
+
+    .titulo {
+      margin-bottom: 22px;
+    }
+
+    .titulo p {
+      color: #64748b;
+      margin-top: 8px;
+    }
+
+    .panel {
+      background: white;
+      padding: 24px;
+      border-radius: 14px;
+      margin-bottom: 25px;
+      box-shadow: 0 4px 16px #0f172a0a;
+    }
+
+    .formulario {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 18px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 15px;
+    }
+
+    button {
+      border: none;
+      border-radius: 8px;
+      padding: 11px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      background: #155eef;
+      color: white;
+    }
+
+    button:hover {
+      opacity: 0.88;
+    }
+
+    .ancho {
+      grid-column: 1 / -1;
+    }
+
+    .secundario {
+      background: #e8efff;
+      color: #1746a2;
+    }
+
+    .peligro {
+      background: #fee2e2;
+      color: #b42318;
+    }
+
+    .tarjetas {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .tarjeta {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 14px;
+      padding: 22px;
+      box-shadow: 0 4px 16px #0f172a0a;
+    }
+
+    .etiqueta {
+      color: #155eef;
+      font-size: 13px;
+      font-weight: bold;
+    }
+
+    .tarjeta h3 {
+      margin: 12px 0;
+    }
+
+    .descripcion {
+      color: #64748b;
+      min-height: 40px;
+      line-height: 1.5;
+    }
+
+    .precio {
+      font-size: 23px;
+      font-weight: bold;
+      margin: 18px 0;
+    }
+
+    .acciones {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+
+    #mensaje {
+      margin-top: 15px;
+      color: #155eef;
+      font-weight: bold;
+    }
+
+    .vacio {
+      color: #64748b;
+      padding: 20px 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 25px;
+      color: #64748b;
+    }
+
+    @media (max-width: 600px) {
+      .formulario {
+        grid-template-columns: 1fr;
+      }
+
+      .ancho {
+        grid-column: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>🚘 EVAH</h1>
+    <p>Electrónica Vehicular | Administración de servicios</p>
+  </header>
+
+  <main>
+    <section class="titulo">
+      <h2>Panel de servicios</h2>
+      <p>Gestiona los servicios de diagnóstico y mantenimiento vehicular.</p>
+    </section>
+
+    <section class="panel">
+      <h2>Registrar nuevo servicio</h2>
+
+      <form id="formulario" class="formulario">
+        <input id="nombre" placeholder="Nombre del servicio" required>
+
+        <input id="precio" type="number" min="1"
+          placeholder="Precio en pesos" required>
+
+        <input id="descripcion" class="ancho"
+          placeholder="Descripción del servicio" required>
+
+        <button class="ancho" type="submit">
+          + Registrar servicio (POST)
+        </button>
+      </form>
+
+      <p id="mensaje" role="status" aria-live="polite"></p>
+    </section>
+
+    <section>
+      <h2>Servicios registrados</h2>
+      <div id="tarjetas" class="tarjetas"></div>
+    </section>
+  </main>
+
+  <footer>
+    EVAH · Electrónica Vehicular
+  </footer>
+
+  <script>
+    const API = '/servicios';
+    const tarjetas = document.getElementById('tarjetas');
+    const mensaje = document.getElementById('mensaje');
+
+    function mostrarMensaje(texto) {
+      mensaje.textContent = texto;
+    }
+
+    async function peticion(url, metodo = 'GET', datos) {
+      const opciones = { method: metodo };
+
+      if (datos !== undefined) {
+        opciones.headers = {
+          'Content-Type': 'application/json'
+        };
+        opciones.body = JSON.stringify(datos);
+      }
+
+      const respuesta = await fetch(url, opciones);
+      const resultado = await respuesta.json();
+
+      if (!respuesta.ok) {
+        throw new Error(
+          resultado.message || 'Error en la petición'
+        );
+      }
+
+      return resultado;
+    }
+
+    async function cargarServicios() {
+      tarjetas.innerHTML =
+        '<p class="vacio">Cargando servicios...</p>';
+
+      try {
+        const servicios = await peticion(API);
+
+        tarjetas.innerHTML = '';
+
+        if (servicios.length === 0) {
+          tarjetas.innerHTML =
+            '<p class="vacio">No hay servicios registrados.</p>';
+          return;
+        }
+
+        servicios.forEach(servicio => {
+          const tarjeta = document.createElement('article');
+          tarjeta.className = 'tarjeta';
+
+          const etiqueta = document.createElement('span');
+          etiqueta.className = 'etiqueta';
+          etiqueta.textContent = 'SERVICIO #' + servicio.id;
+
+          const titulo = document.createElement('h3');
+          titulo.textContent = servicio.nombre;
+
+          const descripcion = document.createElement('p');
+          descripcion.className = 'descripcion';
+          descripcion.textContent = servicio.descripcion;
+
+          const precio = document.createElement('p');
+          precio.className = 'precio';
+          precio.textContent = Number(servicio.precio).toLocaleString(
+            'es-CO',
+            {
+              style: 'currency',
+              currency: 'COP',
+              maximumFractionDigits: 0
+            }
+          );
+
+          const acciones = document.createElement('div');
+          acciones.className = 'acciones';
+
+          const editar = document.createElement('button');
+          editar.className = 'secundario';
+          editar.textContent = 'PUT · Editar todo';
+          editar.onclick = () => reemplazar(servicio);
+
+          const actualizar = document.createElement('button');
+          actualizar.className = 'secundario';
+          actualizar.textContent = 'PATCH · Precio';
+          actualizar.onclick = () => cambiarPrecio(servicio);
+
+          const eliminar = document.createElement('button');
+          eliminar.className = 'peligro';
+          eliminar.textContent = 'DELETE · Eliminar';
+          eliminar.onclick = () => eliminarServicio(servicio);
+
+          acciones.append(editar, actualizar, eliminar);
+
+          tarjeta.append(
+            etiqueta,
+            titulo,
+            descripcion,
+            precio,
+            acciones
+          );
+
+          tarjetas.appendChild(tarjeta);
+        });
+      } catch (error) {
+        tarjetas.innerHTML =
+          '<p class="vacio">No se pudo conectar con la API. Comprueba que NestJS esté activo.</p>';
+
+        mostrarMensaje(error.message);
+      }
+    }
+
+    document.getElementById('formulario').addEventListener(
+      'submit',
+      async evento => {
+        evento.preventDefault();
+
+        const datos = {
+          nombre: document.getElementById('nombre').value.trim(),
+          descripcion: document.getElementById('descripcion').value.trim(),
+          precio: Number(document.getElementById('precio').value)
+        };
+
+        if (
+          !datos.nombre ||
+          !datos.descripcion ||
+          !Number.isFinite(datos.precio) ||
+          datos.precio <= 0
+        ) {
+          mostrarMensaje('Completa todos los campos con datos válidos.');
+          return;
+        }
+
+        try {
+          await peticion(API, 'POST', datos);
+
+          evento.target.reset();
+
+          mostrarMensaje('Servicio creado correctamente (POST).');
+
+          await cargarServicios();
+        } catch (error) {
+          mostrarMensaje(error.message);
+        }
+      }
+    );
+
+    async function reemplazar(servicio) {
+      const nombre = prompt('Nuevo nombre:', servicio.nombre);
+      if (nombre === null) return;
+
+      const descripcion = prompt(
+        'Nueva descripción:',
+        servicio.descripcion
+      );
+      if (descripcion === null) return;
+
+      const precioTexto = prompt(
+        'Nuevo precio:',
+        String(servicio.precio)
+      );
+      if (precioTexto === null) return;
+
+      const precio = Number(precioTexto);
+
+      if (
+        !nombre.trim() ||
+        !descripcion.trim() ||
+        !Number.isFinite(precio) ||
+        precio <= 0
+      ) {
+        mostrarMensaje('Ingresa datos válidos.');
+        return;
+      }
+
+      try {
+        await peticion(API + '/' + servicio.id, 'PUT', {
+          nombre: nombre.trim(),
+          descripcion: descripcion.trim(),
+          precio
+        });
+
+        mostrarMensaje('Servicio reemplazado correctamente (PUT).');
+
+        await cargarServicios();
+      } catch (error) {
+        mostrarMensaje(error.message);
+      }
+    }
+
+    async function cambiarPrecio(servicio) {
+      const texto = prompt(
+        'Nuevo precio:',
+        String(servicio.precio)
+      );
+
+      if (texto === null) return;
+
+      const precio = Number(texto);
+
+      if (!Number.isFinite(precio) || precio <= 0) {
+        mostrarMensaje('Ingresa un precio válido.');
+        return;
+      }
+
+      try {
+        await peticion(
+          API + '/' + servicio.id,
+          'PATCH',
+          { precio }
+        );
+
+        mostrarMensaje('Precio actualizado correctamente (PATCH).');
+
+        await cargarServicios();
+      } catch (error) {
+        mostrarMensaje(error.message);
+      }
+    }
+
+    async function eliminarServicio(servicio) {
+      if (!confirm('¿Eliminar "' + servicio.nombre + '"?')) {
+        return;
+      }
+
+      try {
+        await peticion(
+          API + '/' + servicio.id,
+          'DELETE'
+        );
+
+        mostrarMensaje('Servicio eliminado correctamente (DELETE).');
+
+        await cargarServicios();
+      } catch (error) {
+        mostrarMensaje(error.message);
+      }
+    }
+
+    cargarServicios();
+  </script>
+</body>
+</html>
