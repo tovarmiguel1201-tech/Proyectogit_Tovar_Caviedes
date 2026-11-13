@@ -2,79 +2,213 @@
 
 ![EVAH](img/logo--evah.jpg)
 
-## 🚗 Sobre el proyecto
+**Sistema web para la gestión de servicios electrónicos vehiculares.**
 
-**EVAH – Electrónica Vehicular** es un proyecto enfocado en el mantenimiento, diagnóstico y revisión de los sistemas eléctricos y electrónicos de vehículos.
+EVAH es una aplicación web desarrollada para apoyar la gestión de un negocio dedicado al mantenimiento, diagnóstico y reparación de sistemas eléctricos y electrónicos de vehículos. El proyecto ha evolucionado desde una página web informativa hasta un sistema con backend, conexión a base de datos y funcionalidades para administrar la información del negocio.
 
-Este sitio web fue desarrollado como un portafolio digital para presentar los servicios, proyectos y el equipo de trabajo de EVAH.
+## 1. Descripción del proyecto
 
----
+El sistema EVAH permite gestionar información relacionada con los servicios ofrecidos, los usuarios y las facturas generadas. Cuenta con una interfaz web y un backend desarrollado con NestJS, conectado a una base de datos PostgreSQL.
 
-## 🎯 Objetivo
+El objetivo es centralizar la información y facilitar los procesos administrativos del negocio mediante una plataforma organizada y funcional.
 
-Crear una página web moderna, sencilla y responsive que permita presentar la empresa y facilitar el contacto con posibles clientes interesados en servicios de electrónica vehicular.
+## 2. Objetivos
 
----
+### Objetivo general
 
-## 👥 Equipo de trabajo
+Desarrollar una aplicación web para la gestión de servicios electrónicos vehiculares, integrando una interfaz de usuario, un servidor backend y una base de datos relacional.
 
-El proyecto es desarrollado por:
+### Objetivos específicos
 
-- **Miguel Tovar**
-- **David Caviedes**
+- Diseñar una interfaz web intuitiva y organizada.
+- Permitir el registro y consulta de servicios.
+- Gestionar la información de los usuarios.
+- Registrar y consultar facturas.
+- Conectar el backend con una base de datos PostgreSQL.
+- Implementar operaciones de comunicación entre el frontend y el backend mediante una API REST.
 
----
+## 3. Funcionalidades implementadas
 
-## 🔧 Servicios
+### Página web
 
-EVAH ofrece servicios relacionados con:
+- Interfaz gráfica de EVAH.
+- Presentación de la empresa y sus servicios.
+- Secciones informativas y de navegación.
+- Panel de administración para gestionar información del negocio.
 
-- Escaneo de los sistemas vehiculares.
-- Diagnóstico de sistemas eléctricos.
-- Diagnóstico de sistemas electrónicos.
-- Revisión de sistemas vehiculares.
-- Revisión de conexiones eléctricas.
-- Mantenimiento preventivo.
+### Gestión de servicios
 
----
+- Registrar nuevos servicios.
+- Consultar los servicios almacenados.
+- Guardar información como nombre, descripción y precio.
 
-## 💻 Tecnologías utilizadas
+### Gestión de usuarios
 
-El proyecto fue desarrollado utilizando tecnologías web básicas:
+- Registrar usuarios.
+- Consultar usuarios registrados.
+- Almacenar información como nombre, correo, teléfono y rol.
+- Incorporar una ruta para el inicio de sesión.
 
-### HTML5
+### Gestión de facturación
 
-Utilizado para crear la estructura y contenido de la página.
+- Registrar facturas.
+- Consultar las facturas almacenadas.
+- Consultar una factura por su identificador.
+- Actualizar el estado de una factura.
+- Eliminar facturas.
 
-### CSS3
+### Backend y API REST
 
-Utilizado para diseñar la interfaz, colores, distribución, tarjetas, botones y adaptación a diferentes tamaños de pantalla.
+El backend permite conectar la página web con la base de datos y procesar las solicitudes realizadas desde el frontend.
 
-### JavaScript
+Se implementaron rutas HTTP para realizar operaciones como:
 
-Utilizado para agregar interactividad a la página, desplazamiento suave y animaciones.
+| Método | Ruta | Función |
+|---|---|---|
+| GET | `/servicios` | Consultar servicios |
+| POST | `/servicios` | Registrar servicios |
+| GET | `/usuarios` | Consultar usuarios |
+| POST | `/usuarios` | Registrar usuarios |
+| POST | `/usuarios/login` | Iniciar sesión |
+| GET | `/facturas` | Consultar facturas |
+| POST | `/facturas` | Registrar facturas |
+| GET | `/facturas/:id` | Consultar una factura |
+| PATCH | `/facturas/:id/estado` | Actualizar estado |
+| DELETE | `/facturas/:id` | Eliminar factura |
 
-### Git
+## 4. Tecnologías utilizadas
 
-Utilizado para controlar las diferentes versiones del proyecto.
+| Tecnología | Aplicación en el proyecto |
+|---|---|
+| HTML5 | Estructura de la página web |
+| CSS3 | Diseño y estilos de la interfaz |
+| JavaScript | Funcionalidades e interacción |
+| Node.js | Entorno de ejecución del backend |
+| NestJS | Desarrollo de la API REST |
+| TypeScript | Lenguaje utilizado en el backend |
+| PostgreSQL | Sistema de gestión de base de datos |
+| TypeORM | Conexión y gestión de entidades de la base de datos |
+| Git | Control de versiones |
+| GitHub | Almacenamiento y seguimiento del proyecto |
+| Docker | Herramienta de configuración y ejecución de contenedores del proyecto |
 
-### GitHub
+## 5. Arquitectura del proyecto
 
-Utilizado para almacenar el código fuente y publicar el proyecto.
+El proyecto utiliza una arquitectura dividida en tres partes principales:
 
----
+1. **Frontend:** interfaz web con la que interactúa el usuario.
+2. **Backend:** aplicación NestJS que recibe las solicitudes, ejecuta la lógica del sistema y se comunica con la base de datos.
+3. **Base de datos:** PostgreSQL, donde se almacena la información de servicios, usuarios y facturas.
 
-## 📁 Estructura del proyecto
+## 6. Estructura del proyecto
 
 ```text
-EVAH/
+Proyectogit_Tovar_Caviedes/
 │
+├── backend/
+│   ├── src/
+│   │   ├── servicios/
+│   │   ├── usuarios/
+│   │   ├── facturas/
+│   │   ├── app.module.ts
+│   │   └── main.ts
+│   │
+│   ├── public/
+│   │   └── index.html
+│   │
+│   ├── .env.example
+│   └── package.json
+│
+├── img/
 ├── index.html
 ├── style.css
 ├── script.js
-├── README.md
-│
-└── img/
-    ├── logo.png
-    ├── servicio1.jpg
-    └── servicio2.jpg
+├── Dockerfile
+├── docker-compose.yml
+├── .gitignore
+└── README.md
+```
+
+## 7. Instalación y ejecución
+
+### Requisitos
+
+- Node.js y npm.
+- PostgreSQL.
+- Visual Studio Code.
+- Git (opcional, para clonar el repositorio).
+
+### Clonar el repositorio
+
+```bash
+git clone https://github.com/tovarmiguel1201-tech/Proyectogit_Tovar_Caviedes.git
+```
+
+Ingresar a la carpeta del backend:
+
+```bash
+cd Proyectogit_Tovar_Caviedes/backend
+```
+
+Instalar las dependencias:
+
+```bash
+npm install
+```
+
+Configurar las variables de entorno en el archivo `.env`, utilizando como referencia `.env.example`.
+
+Iniciar el servidor:
+
+```bash
+npm run start:dev
+```
+
+El backend se ejecuta normalmente en:
+
+```text
+http://localhost:3000
+```
+
+### Consultar la API
+
+Las siguientes rutas permiten comprobar la comunicación con el backend:
+
+- http://localhost:3000/servicios
+- http://localhost:3000/usuarios
+- http://localhost:3000/facturas
+
+Para abrir la página web desde Visual Studio Code, se puede utilizar la extensión Live Server.
+
+## 8. Base de datos
+
+El sistema utiliza PostgreSQL como motor de base de datos y TypeORM para gestionar la comunicación entre NestJS y las entidades.
+
+La información se organiza en módulos que permiten administrar:
+
+- Servicios.
+- Usuarios.
+- Facturas.
+
+Las credenciales de conexión se configuran mediante variables de entorno y no deben publicarse en el repositorio.
+
+## 9. Equipo de desarrollo
+
+**Desarrolladores:**
+
+- Miguel Tovar.
+- David Caviedes.
+
+**Proyecto académico:** Electrónica Vehicular EVAH.
+
+## 10. Repositorio
+
+El código fuente y los avances del proyecto se encuentran disponibles en GitHub:
+
+https://github.com/tovarmiguel1201-tech/Proyectogit_Tovar_Caviedes
+
+---
+
+**EVAH – Electrónica Vehicular**
+
+Sistema web orientado a la gestión y administración de servicios electrónicos vehiculares.

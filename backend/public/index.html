@@ -2,456 +2,1089 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>EVAH | Gestión de servicios</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EVAH | Panel administrativo</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
+<style>
+:root {
+    --azul: #123b72;
+    --azul2: #155eef;
+    --fondo: #f3f6fb;
+    --texto: #172b4d;
+    --gris: #64748b;
+    --borde: #e2e8f0;
+    --verde: #15803d;
+    --rojo: #b42318;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: var(--fondo);
+    color: var(--texto);
+}
+
+button, input, select {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+}
+
+.layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 245px;
+    background: #102d53;
+    color: white;
+    padding: 28px 18px;
+    flex-shrink: 0;
+}
+
+.logo {
+    font-size: 27px;
+    font-weight: 800;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+}
+
+.logo-sub {
+    color: #b9d5fa;
+    font-size: 12px;
+    margin-bottom: 38px;
+}
+
+.menu-titulo {
+    font-size: 11px;
+    color: #91afd4;
+    margin: 20px 10px 12px;
+    letter-spacing: 1px;
+}
+
+.menu a {
+    display: block;
+    color: #dceafe;
+    text-decoration: none;
+    padding: 13px 12px;
+    border-radius: 9px;
+    margin-bottom: 6px;
+    font-size: 14px;
+}
+
+.menu a:hover, .menu a.activo {
+    background: #244c7d;
+    color: white;
+}
+
+.sidebar-footer {
+    margin-top: 55px;
+    color: #a9c2e3;
+    font-size: 12px;
+    line-height: 1.6;
+}
+
+.contenido {
+    flex: 1;
+    min-width: 0;
+}
+
+.topbar {
+    background: white;
+    padding: 19px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--borde);
+    gap: 15px;
+}
+
+.topbar h2 {
+    font-size: 19px;
+}
+
+.admin {
+    font-size: 13px;
+    color: var(--gris);
+}
+
+main {
+    max-width: 1450px;
+    margin: auto;
+    padding: 30px;
+}
+
+.encabezado {
+    margin-bottom: 25px;
+}
+
+.encabezado h1 {
+    font-size: 27px;
+    margin-bottom: 8px;
+}
+
+.encabezado p {
+    color: var(--gris);
+    font-size: 14px;
+}
+
+.tarjetas-resumen {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 17px;
+    margin-bottom: 28px;
+}
+
+.resumen {
+    background: white;
+    padding: 21px;
+    border-radius: 13px;
+    border: 1px solid var(--borde);
+    box-shadow: 0 3px 12px #0f172a08;
+}
+
+.resumen span {
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.resumen h3 {
+    font-size: 25px;
+    margin-top: 12px;
+}
+
+.icono {
+    font-size: 22px;
+    margin-bottom: 10px;
+}
+
+.seccion {
+    background: white;
+    border: 1px solid var(--borde);
+    border-radius: 14px;
+    padding: 24px;
+    margin-bottom: 25px;
+    box-shadow: 0 3px 12px #0f172a08;
+    scroll-margin-top: 20px;
+}
+
+.seccion-titulo {
+    margin-bottom: 20px;
+}
+
+.seccion-titulo h2 {
+    font-size: 19px;
+    margin-bottom: 7px;
+}
+
+.seccion-titulo p {
+    color: var(--gris);
+    font-size: 13px;
+}
+
+.formulario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.campo label {
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.campo input, .campo select {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    background: white;
+}
+
+.campo input:focus, .campo select:focus {
+    border-color: var(--azul2);
+    box-shadow: 0 0 0 3px #155eef18;
+}
+
+.ancho {
+    grid-column: 1 / -1;
+}
+
+.boton {
+    padding: 11px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 13px;
+    background: var(--azul2);
+    color: white;
+}
+
+.boton:hover {
+    filter: brightness(.92);
+}
+
+.boton-secundario {
+    background: #e8efff;
+    color: #1746a2;
+}
+
+.boton-verde {
+    background: #15803d;
+    color: white;
+}
+
+.boton-rojo {
+    background: #fee2e2;
+    color: var(--rojo);
+}
+
+.boton-gris {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.servicios-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px;
+}
+
+.servicio-card {
+    border: 1px solid var(--borde);
+    padding: 19px;
+    border-radius: 12px;
+    transition: .2s;
+}
+
+.servicio-card:hover {
+    border-color: #8bb5f5;
+    transform: translateY(-2px);
+}
+
+.servicio-card small {
+    color: var(--azul2);
+    font-weight: bold;
+}
+
+.servicio-card h3 {
+    margin: 12px 0 8px;
+    font-size: 16px;
+}
+
+.servicio-card p {
+    font-size: 13px;
+    color: var(--gris);
+    line-height: 1.5;
+    min-height: 40px;
+}
+
+.servicio-precio {
+    font-size: 20px;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.linea-factura {
+    display: grid;
+    grid-template-columns: minmax(0, 2fr) 100px auto;
+    gap: 12px;
+    align-items: end;
+    padding: 15px;
+    background: #f8fafc;
+    border-radius: 10px;
+    margin-bottom: 12px;
+}
+
+.linea-factura .campo {
+    min-width: 0;
+}
+
+.total-caja {
+    background: #eff6ff;
+    border: 1px solid #bfdbfe;
+    border-radius: 10px;
+    padding: 20px;
+    margin: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.total-caja span {
+    font-weight: bold;
+}
+
+.total-caja strong {
+    font-size: 25px;
+    color: var(--azul2);
+}
+
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 650px;
+}
+
+th, td {
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid var(--borde);
+    font-size: 13px;
+}
+
+th {
+    background: #f8fafc;
+    color: #475569;
+}
+
+.estado {
+    display: inline-block;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 11px;
+    font-weight: bold;
+}
+
+.pendiente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.pagada {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.mensaje {
+    margin-top: 15px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+
+.exito {
+    color: var(--verde);
+}
+
+.error {
+    color: var(--rojo);
+}
+
+.vacio {
+    color: var(--gris);
+    padding: 20px 0;
+    font-size: 14px;
+}
+
+.acciones {
+    display: flex;
+    gap: 7px;
+    flex-wrap: wrap;
+}
+
+footer {
+    text-align: center;
+    color: var(--gris);
+    font-size: 12px;
+    padding: 25px;
+}
+
+@media(max-width: 950px) {
+    .tarjetas-resumen {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 650px) {
+    .layout {
+        display: block;
     }
 
-    body {
-      font-family: Arial, sans-serif;
-      background: #f3f6fb;
-      color: #1e293b;
+    .sidebar {
+        width: 100%;
+        padding: 18px;
     }
 
-    header {
-      background: #123b72;
-      color: white;
-      padding: 25px 7%;
+    .logo-sub {
+        margin-bottom: 15px;
     }
 
-    header h1 {
-      font-size: 28px;
-      margin-bottom: 6px;
+    .menu {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
     }
 
-    header p {
-      color: #dbeafe;
+    .menu a {
+        padding: 9px;
+        font-size: 12px;
+    }
+
+    .sidebar-footer {
+        display: none;
+    }
+
+    .topbar {
+        padding: 15px;
     }
 
     main {
-      max-width: 1100px;
-      margin: 35px auto;
-      padding: 0 20px;
+        padding: 17px;
     }
 
-    .titulo {
-      margin-bottom: 22px;
+    .tarjetas-resumen {
+        grid-template-columns: 1fr 1fr;
     }
 
-    .titulo p {
-      color: #64748b;
-      margin-top: 8px;
-    }
-
-    .panel {
-      background: white;
-      padding: 24px;
-      border-radius: 14px;
-      margin-bottom: 25px;
-      box-shadow: 0 4px 16px #0f172a0a;
+    .seccion {
+        padding: 17px;
     }
 
     .formulario {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 15px;
-      margin-top: 18px;
-    }
-
-    input {
-      width: 100%;
-      padding: 12px;
-      border: 1px solid #cbd5e1;
-      border-radius: 8px;
-      font-size: 15px;
-    }
-
-    button {
-      border: none;
-      border-radius: 8px;
-      padding: 11px 14px;
-      cursor: pointer;
-      font-weight: bold;
-      background: #155eef;
-      color: white;
-    }
-
-    button:hover {
-      opacity: 0.88;
+        grid-template-columns: 1fr;
     }
 
     .ancho {
-      grid-column: 1 / -1;
-    }
-
-    .secundario {
-      background: #e8efff;
-      color: #1746a2;
-    }
-
-    .peligro {
-      background: #fee2e2;
-      color: #b42318;
-    }
-
-    .tarjetas {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 18px;
-      margin-top: 20px;
-    }
-
-    .tarjeta {
-      background: white;
-      border: 1px solid #e2e8f0;
-      border-radius: 14px;
-      padding: 22px;
-      box-shadow: 0 4px 16px #0f172a0a;
-    }
-
-    .etiqueta {
-      color: #155eef;
-      font-size: 13px;
-      font-weight: bold;
-    }
-
-    .tarjeta h3 {
-      margin: 12px 0;
-    }
-
-    .descripcion {
-      color: #64748b;
-      min-height: 40px;
-      line-height: 1.5;
-    }
-
-    .precio {
-      font-size: 23px;
-      font-weight: bold;
-      margin: 18px 0;
-    }
-
-    .acciones {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-
-    #mensaje {
-      margin-top: 15px;
-      color: #155eef;
-      font-weight: bold;
-    }
-
-    .vacio {
-      color: #64748b;
-      padding: 20px 0;
-    }
-
-    footer {
-      text-align: center;
-      padding: 25px;
-      color: #64748b;
-    }
-
-    @media (max-width: 600px) {
-      .formulario {
-        grid-template-columns: 1fr;
-      }
-
-      .ancho {
         grid-column: auto;
-      }
     }
-  </style>
+
+    .linea-factura {
+        grid-template-columns: 1fr 85px;
+    }
+
+    .linea-factura .campo:first-child {
+        grid-column: 1 / -1;
+    }
+}
+
+@media(max-width: 380px) {
+    .tarjetas-resumen {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
 </head>
 
 <body>
-  <header>
-    <h1>🚘 EVAH</h1>
-    <p>Electrónica Vehicular | Administración de servicios</p>
-  </header>
 
-  <main>
-    <section class="titulo">
-      <h2>Panel de servicios</h2>
-      <p>Gestiona los servicios de diagnóstico y mantenimiento vehicular.</p>
-    </section>
+<div class="layout">
 
-    <section class="panel">
-      <h2>Registrar nuevo servicio</h2>
+    <aside class="sidebar">
+        <div class="logo">EVAH</div>
+        <div class="logo-sub">ELECTRÓNICA VEHICULAR</div>
 
-      <form id="formulario" class="formulario">
-        <input id="nombre" placeholder="Nombre del servicio" required>
+        <div class="menu-titulo">MENÚ PRINCIPAL</div>
 
-        <input id="precio" type="number" min="1"
-          placeholder="Precio en pesos" required>
+        <nav class="menu">
+            <a href="#inicio" class="activo">▦ Resumen</a>
+            <a href="#registrar">＋ Nueva factura</a>
+            <a href="#servicios">⚙ Servicios disponibles</a>
+            <a href="#historial">▤ Historial de facturas</a>
+        </nav>
 
-        <input id="descripcion" class="ancho"
-          placeholder="Descripción del servicio" required>
+        <div class="sidebar-footer">
+            EVAH<br>
+            Sistema de gestión vehicular<br>
+            Panel administrativo · 2026
+        </div>
+    </aside>
 
-        <button class="ancho" type="submit">
-          + Registrar servicio (POST)
-        </button>
-      </form>
+    <div class="contenido">
 
-      <p id="mensaje" role="status" aria-live="polite"></p>
-    </section>
+        <div class="topbar">
+            <h2>Panel administrativo</h2>
+            <div class="admin">Administrador · EVAH</div>
+        </div>
 
-    <section>
-      <h2>Servicios registrados</h2>
-      <div id="tarjetas" class="tarjetas"></div>
-    </section>
-  </main>
+        <main>
 
-  <footer>
-    EVAH · Electrónica Vehicular
-  </footer>
+            <section class="encabezado" id="inicio">
+                <h1>Panel de control</h1>
+                <p>Gestiona clientes, servicios y facturación de Electrónica Vehicular EVAH.</p>
+            </section>
 
-  <script>
-    const API = '/servicios';
-    const tarjetas = document.getElementById('tarjetas');
-    const mensaje = document.getElementById('mensaje');
+            <section class="tarjetas-resumen">
+                <article class="resumen">
+                    <div class="icono">⚙</div>
+                    <span>Servicios disponibles</span>
+                    <h3 id="totalServicios">0</h3>
+                </article>
 
-    function mostrarMensaje(texto) {
-      mensaje.textContent = texto;
-    }
+                <article class="resumen">
+                    <div class="icono">👥</div>
+                    <span>Clientes registrados</span>
+                    <h3 id="totalClientes">0</h3>
+                </article>
 
-    async function peticion(url, metodo = 'GET', datos) {
-      const opciones = { method: metodo };
+                <article class="resumen">
+                    <div class="icono">🧾</div>
+                    <span>Facturas registradas</span>
+                    <h3 id="totalFacturas">0</h3>
+                </article>
 
-      if (datos !== undefined) {
-        opciones.headers = {
-          'Content-Type': 'application/json'
-        };
+                <article class="resumen">
+                    <div class="icono">💰</div>
+                    <span>Valor facturado</span>
+                    <h3 id="valorFacturado">$0</h3>
+                </article>
+            </section>
+
+            <section class="seccion" id="servicios">
+                <div class="seccion-titulo">
+                    <h2>Servicios disponibles</h2>
+                    <p>Servicios y precios registrados en la base de datos.</p>
+                </div>
+
+                <div id="listaServicios" class="servicios-grid">
+                    <p class="vacio">Cargando servicios...</p>
+                </div>
+            </section>
+
+            <section class="seccion" id="registrar">
+                <div class="seccion-titulo">
+                    <h2>＋ Generar nueva factura</h2>
+                    <p>Selecciona un cliente y agrega los servicios que deseas facturar.</p>
+                </div>
+
+                <form id="formFactura">
+
+                    <div class="campo">
+                        <label for="cliente">Seleccionar cliente</label>
+                        <select id="cliente" required>
+                            <option value="">Cargando clientes...</option>
+                        </select>
+                    </div>
+
+                    <div style="height:22px"></div>
+
+                    <div class="seccion-titulo">
+                        <h2>Servicios de la factura</h2>
+                        <p>Agrega uno o varios servicios y sus cantidades.</p>
+                    </div>
+
+                    <div id="lineasFactura"></div>
+
+                    <button type="button" class="boton boton-secundario" id="agregarLinea">
+                        ＋ Agregar otro servicio
+                    </button>
+
+                    <div class="total-caja">
+                        <span>Total estimado</span>
+                        <strong id="totalEstimado">$0</strong>
+                    </div>
+
+                    <p style="font-size:12px;color:#64748b;margin-bottom:15px">
+                        El valor definitivo será calculado por el servidor con los precios registrados.
+                    </p>
+
+                    <button type="submit" class="boton boton-verde" id="btnGenerar">
+                        ✓ Generar factura
+                    </button>
+
+                    <p id="mensajeFactura" class="mensaje" role="status" aria-live="polite"></p>
+
+                </form>
+            </section>
+
+            <section class="seccion" id="historial">
+                <div class="seccion-titulo" style="display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap">
+                    <div>
+                        <h2>Historial de facturas</h2>
+                        <p>Consulta y administra las facturas generadas.</p>
+                    </div>
+
+                    <button class="boton boton-secundario" id="actualizar">
+                        ↻ Actualizar lista
+                    </button>
+                </div>
+
+                <div class="tabla-contenedor">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Factura</th>
+                                <th>Cliente</th>
+                                <th>Fecha</th>
+                                <th>Total</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tablaFacturas">
+                            <tr>
+                                <td colspan="6">Cargando facturas...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+        </main>
+
+        <footer>
+            © 2026 EVAH · Electrónica Vehicular · Sistema administrativo
+        </footer>
+
+    </div>
+</div>
+
+<script>
+const API = {
+    servicios: '/servicios',
+    usuarios: '/usuarios',
+    facturas: '/facturas'
+};
+
+let servicios = [];
+let clientes = [];
+let facturas = [];
+
+const $ = id => document.getElementById(id);
+
+function moneda(valor) {
+    return Number(valor || 0).toLocaleString('es-CO', {
+        style: 'currency',
+        currency: 'COP',
+        maximumFractionDigits: 0
+    });
+}
+
+function escapar(texto) {
+    return String(texto ?? '').replace(/[&<>"']/g, letra => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[letra]);
+}
+
+
+async function peticion(url, metodo = 'GET', datos) {
+    const opciones = {
+        method: metodo,
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    };
+
+    if (datos !== undefined) {
         opciones.body = JSON.stringify(datos);
-      }
-
-      const respuesta = await fetch(url, opciones);
-      const resultado = await respuesta.json();
-
-      if (!respuesta.ok) {
-        throw new Error(
-          resultado.message || 'Error en la petición'
-        );
-      }
-
-      return resultado;
     }
 
-    async function cargarServicios() {
-      tarjetas.innerHTML =
-        '<p class="vacio">Cargando servicios...</p>';
+    const direccion = url.startsWith('http')
+        ? url
+        : `http://localhost:3000${url.startsWith('/') ? '' : '/'}${url}`;
 
-      try {
-        const servicios = await peticion(API);
+    try {
+        const respuesta = await fetch(direccion, opciones);
+        const texto = await respuesta.text();
 
-        tarjetas.innerHTML = '';
-
-        if (servicios.length === 0) {
-          tarjetas.innerHTML =
-            '<p class="vacio">No hay servicios registrados.</p>';
-          return;
-        }
-
-        servicios.forEach(servicio => {
-          const tarjeta = document.createElement('article');
-          tarjeta.className = 'tarjeta';
-
-          const etiqueta = document.createElement('span');
-          etiqueta.className = 'etiqueta';
-          etiqueta.textContent = 'SERVICIO #' + servicio.id;
-
-          const titulo = document.createElement('h3');
-          titulo.textContent = servicio.nombre;
-
-          const descripcion = document.createElement('p');
-          descripcion.className = 'descripcion';
-          descripcion.textContent = servicio.descripcion;
-
-          const precio = document.createElement('p');
-          precio.className = 'precio';
-          precio.textContent = Number(servicio.precio).toLocaleString(
-            'es-CO',
-            {
-              style: 'currency',
-              currency: 'COP',
-              maximumFractionDigits: 0
-            }
-          );
-
-          const acciones = document.createElement('div');
-          acciones.className = 'acciones';
-
-          const editar = document.createElement('button');
-          editar.className = 'secundario';
-          editar.textContent = 'PUT · Editar todo';
-          editar.onclick = () => reemplazar(servicio);
-
-          const actualizar = document.createElement('button');
-          actualizar.className = 'secundario';
-          actualizar.textContent = 'PATCH · Precio';
-          actualizar.onclick = () => cambiarPrecio(servicio);
-
-          const eliminar = document.createElement('button');
-          eliminar.className = 'peligro';
-          eliminar.textContent = 'DELETE · Eliminar';
-          eliminar.onclick = () => eliminarServicio(servicio);
-
-          acciones.append(editar, actualizar, eliminar);
-
-          tarjeta.append(
-            etiqueta,
-            titulo,
-            descripcion,
-            precio,
-            acciones
-          );
-
-          tarjetas.appendChild(tarjeta);
-        });
-      } catch (error) {
-        tarjetas.innerHTML =
-          '<p class="vacio">No se pudo conectar con la API. Comprueba que NestJS esté activo.</p>';
-
-        mostrarMensaje(error.message);
-      }
-    }
-
-    document.getElementById('formulario').addEventListener(
-      'submit',
-      async evento => {
-        evento.preventDefault();
-
-        const datos = {
-          nombre: document.getElementById('nombre').value.trim(),
-          descripcion: document.getElementById('descripcion').value.trim(),
-          precio: Number(document.getElementById('precio').value)
-        };
-
-        if (
-          !datos.nombre ||
-          !datos.descripcion ||
-          !Number.isFinite(datos.precio) ||
-          datos.precio <= 0
-        ) {
-          mostrarMensaje('Completa todos los campos con datos válidos.');
-          return;
-        }
+        let resultado = {};
 
         try {
-          await peticion(API, 'POST', datos);
-
-          evento.target.reset();
-
-          mostrarMensaje('Servicio creado correctamente (POST).');
-
-          await cargarServicios();
-        } catch (error) {
-          mostrarMensaje(error.message);
+            resultado = texto ? JSON.parse(texto) : {};
+        } catch {
+            resultado = { message: texto };
         }
-      }
+
+        if (!respuesta.ok) {
+            throw new Error(
+                resultado.message || `Error HTTP ${respuesta.status}`
+            );
+        }
+
+        return resultado;
+
+    } catch (error) {
+        console.error('Error en petición:', direccion, error);
+        throw error;
+    }
+}
+
+
+async function cargarServicios() {
+    servicios = await peticion(API.servicios);
+
+    $('totalServicios').textContent = servicios.length;
+
+    const contenedor = $('listaServicios');
+    contenedor.innerHTML = '';
+
+    if (!servicios.length) {
+        contenedor.innerHTML = '<p class="vacio">No hay servicios disponibles.</p>';
+        return;
+    }
+
+    servicios.forEach(servicio => {
+        const tarjeta = document.createElement('article');
+        tarjeta.className = 'servicio-card';
+
+        const etiqueta = document.createElement('small');
+        etiqueta.textContent = 'SERVICIO #' + servicio.id;
+
+        const nombre = document.createElement('h3');
+        nombre.textContent = servicio.nombre;
+
+        const descripcion = document.createElement('p');
+        descripcion.textContent = servicio.descripcion || 'Sin descripción';
+
+        const precio = document.createElement('div');
+        precio.className = 'servicio-precio';
+        precio.textContent = moneda(servicio.precio);
+
+        tarjeta.append(etiqueta, nombre, descripcion, precio);
+        contenedor.appendChild(tarjeta);
+    });
+}
+
+async function cargarClientes() {
+    const usuarios = await peticion(API.usuarios);
+
+    clientes = usuarios.filter(usuario =>
+        String(usuario.rol || '').toLowerCase() === 'cliente'
     );
 
-    async function reemplazar(servicio) {
-      const nombre = prompt('Nuevo nombre:', servicio.nombre);
-      if (nombre === null) return;
+    $('totalClientes').textContent = clientes.length;
 
-      const descripcion = prompt(
-        'Nueva descripción:',
-        servicio.descripcion
-      );
-      if (descripcion === null) return;
+    const selector = $('cliente');
+    selector.innerHTML = '<option value="">Selecciona un cliente</option>';
 
-      const precioTexto = prompt(
-        'Nuevo precio:',
-        String(servicio.precio)
-      );
-      if (precioTexto === null) return;
+    clientes.forEach(cliente => {
+        const opcion = document.createElement('option');
+        opcion.value = cliente.id;
+        opcion.textContent = cliente.nombre + ' · ' + cliente.correo;
+        selector.appendChild(opcion);
+    });
 
-      const precio = Number(precioTexto);
+    if (!clientes.length) {
+        selector.innerHTML = '<option value="">No hay clientes registrados</option>';
+    }
+}
 
-      if (
-        !nombre.trim() ||
-        !descripcion.trim() ||
-        !Number.isFinite(precio) ||
-        precio <= 0
-      ) {
-        mostrarMensaje('Ingresa datos válidos.');
+function agregarLinea() {
+    if (!servicios.length) {
+        mostrarMensaje('Primero debes registrar servicios.', 'error');
         return;
-      }
+    }
 
-      try {
-        await peticion(API + '/' + servicio.id, 'PUT', {
-          nombre: nombre.trim(),
-          descripcion: descripcion.trim(),
-          precio
+    const fila = document.createElement('div');
+    fila.className = 'linea-factura';
+
+    const campoServicio = document.createElement('div');
+    campoServicio.className = 'campo';
+
+    const labelServicio = document.createElement('label');
+    labelServicio.textContent = 'Servicio';
+
+    const select = document.createElement('select');
+    select.className = 'servicio-select';
+    select.required = true;
+
+    select.innerHTML = '<option value="">Seleccionar servicio</option>';
+
+    servicios.forEach(servicio => {
+        const opcion = document.createElement('option');
+        opcion.value = servicio.id;
+        opcion.textContent = servicio.nombre + ' - ' + moneda(servicio.precio);
+        select.appendChild(opcion);
+    });
+
+    campoServicio.append(labelServicio, select);
+
+    const campoCantidad = document.createElement('div');
+    campoCantidad.className = 'campo';
+
+    const labelCantidad = document.createElement('label');
+    labelCantidad.textContent = 'Cantidad';
+
+    const cantidad = document.createElement('input');
+    cantidad.type = 'number';
+    cantidad.min = '1';
+    cantidad.step = '1';
+    cantidad.value = '1';
+    cantidad.className = 'cantidad-input';
+    cantidad.required = true;
+
+    campoCantidad.append(labelCantidad, cantidad);
+
+    const eliminar = document.createElement('button');
+    eliminar.type = 'button';
+    eliminar.className = 'boton boton-rojo';
+    eliminar.textContent = 'Quitar';
+
+    eliminar.addEventListener('click', () => {
+        fila.remove();
+        calcularTotal();
+    });
+
+    select.addEventListener('change', calcularTotal);
+    cantidad.addEventListener('input', calcularTotal);
+
+    fila.append(campoServicio, campoCantidad, eliminar);
+    $('lineasFactura').appendChild(fila);
+
+    calcularTotal();
+}
+
+function calcularTotal() {
+    let total = 0;
+
+    document.querySelectorAll('.linea-factura').forEach(fila => {
+        const servicioId = Number(fila.querySelector('.servicio-select').value);
+        const cantidad = Number(fila.querySelector('.cantidad-input').value);
+
+        const servicio = servicios.find(s => Number(s.id) === servicioId);
+
+        if (servicio && Number.isInteger(cantidad) && cantidad > 0) {
+            total += Number(servicio.precio) * cantidad;
+        }
+    });
+
+    $('totalEstimado').textContent = moneda(total);
+}
+
+async function crearFactura(evento) {
+    evento.preventDefault();
+
+    const clienteId = Number($('cliente').value);
+
+    const filas = [...document.querySelectorAll('.linea-factura')];
+
+    if (!clienteId) {
+        mostrarMensaje('Selecciona un cliente.', 'error');
+        return;
+    }
+
+    if (!filas.length) {
+        mostrarMensaje('Agrega por lo menos un servicio.', 'error');
+        return;
+    }
+
+    const detalles = [];
+
+    for (const fila of filas) {
+        const servicioId = Number(fila.querySelector('.servicio-select').value);
+        const cantidad = Number(fila.querySelector('.cantidad-input').value);
+
+        if (!servicioId || !Number.isInteger(cantidad) || cantidad <= 0) {
+            mostrarMensaje('Verifica los servicios y las cantidades.', 'error');
+            return;
+        }
+
+        detalles.push({ servicioId, cantidad });
+    }
+
+    const boton = $('btnGenerar');
+    boton.disabled = true;
+    boton.textContent = 'Generando factura...';
+
+    try {
+        const resultado = await peticion(API.facturas, 'POST', {
+            clienteId,
+            detalles
         });
 
-        mostrarMensaje('Servicio reemplazado correctamente (PUT).');
-
-        await cargarServicios();
-      } catch (error) {
-        mostrarMensaje(error.message);
-      }
-    }
-
-    async function cambiarPrecio(servicio) {
-      const texto = prompt(
-        'Nuevo precio:',
-        String(servicio.precio)
-      );
-
-      if (texto === null) return;
-
-      const precio = Number(texto);
-
-      if (!Number.isFinite(precio) || precio <= 0) {
-        mostrarMensaje('Ingresa un precio válido.');
-        return;
-      }
-
-      try {
-        await peticion(
-          API + '/' + servicio.id,
-          'PATCH',
-          { precio }
+        mostrarMensaje(
+            '¡Factura #' + (resultado.id ?? 'creada') + ' registrada correctamente!',
+            'exito'
         );
 
-        mostrarMensaje('Precio actualizado correctamente (PATCH).');
+        $('formFactura').reset();
+        $('lineasFactura').innerHTML = '';
+        agregarLinea();
+        calcularTotal();
 
-        await cargarServicios();
-      } catch (error) {
-        mostrarMensaje(error.message);
-      }
+        await cargarFacturas();
+        window.location.hash = 'historial';
+
+    } catch (error) {
+        mostrarMensaje(error.message, 'error');
+    } finally {
+        boton.disabled = false;
+        boton.textContent = '✓ Generar factura';
+    }
+}
+
+function fechaLegible(fecha) {
+    if (!fecha) return 'Sin fecha';
+
+    const valor = new Date(fecha);
+
+    if (Number.isNaN(valor.getTime())) return 'Sin fecha';
+
+    return valor.toLocaleDateString('es-CO', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric'
+    });
+}
+
+async function cargarFacturas() {
+    facturas = await peticion(API.facturas);
+
+    $('totalFacturas').textContent = facturas.length;
+
+    const total = facturas.reduce((suma, factura) =>
+        suma + Number(factura.total || 0), 0
+    );
+
+    $('valorFacturado').textContent = moneda(total);
+
+    const cuerpo = $('tablaFacturas');
+    cuerpo.innerHTML = '';
+
+    if (!facturas.length) {
+        cuerpo.innerHTML = '<tr><td colspan="6">Todavía no hay facturas registradas.</td></tr>';
+        return;
     }
 
-    async function eliminarServicio(servicio) {
-      if (!confirm('¿Eliminar "' + servicio.nombre + '"?')) {
-        return;
-      }
+    facturas.forEach(factura => {
+        const fila = document.createElement('tr');
 
-      try {
+        const id = document.createElement('td');
+        id.textContent = '#' + factura.id;
+
+        const cliente = document.createElement('td');
+        cliente.textContent = factura.cliente?.nombre || 'Cliente no disponible';
+
+        const fecha = document.createElement('td');
+        fecha.textContent = fechaLegible(factura.fechaCreacion);
+
+        const total = document.createElement('td');
+        total.textContent = moneda(factura.total);
+
+        const estado = document.createElement('td');
+        const etiqueta = document.createElement('span');
+        const esPagada = String(factura.estado).toLowerCase() === 'pagada';
+
+        etiqueta.className = 'estado ' + (esPagada ? 'pagada' : 'pendiente');
+        etiqueta.textContent = esPagada ? 'PAGADA' : 'PENDIENTE';
+        estado.appendChild(etiqueta);
+
+        const acciones = document.createElement('td');
+        acciones.className = 'acciones';
+
+        const cambiar = document.createElement('button');
+        cambiar.className = 'boton ' + (esPagada ? 'boton-secundario' : 'boton-verde');
+        cambiar.textContent = esPagada ? 'Marcar pendiente' : 'Marcar pagada';
+
+        cambiar.addEventListener('click', () => cambiarEstado(factura));
+
+        const ver = document.createElement('button');
+        ver.className = 'boton boton-secundario';
+        ver.textContent = 'Ver detalle';
+        ver.addEventListener('click', () => verDetalle(factura));
+
+        acciones.append(ver, cambiar);
+
+        fila.append(id, cliente, fecha, total, estado, acciones);
+        cuerpo.appendChild(fila);
+    });
+}
+
+async function cambiarEstado(factura) {
+    const estadoActual = String(factura.estado).toLowerCase();
+    const nuevoEstado = estadoActual === 'pagada' ? 'pendiente' : 'pagada';
+
+    if (!confirm('¿Cambiar la factura #' + factura.id + ' a ' + nuevoEstado + '?')) {
+        return;
+    }
+
+    try {
         await peticion(
-          API + '/' + servicio.id,
-          'DELETE'
+            API.facturas + '/' + factura.id + '/estado',
+            'PATCH',
+            { estado: nuevoEstado }
         );
 
-        mostrarMensaje('Servicio eliminado correctamente (DELETE).');
+        await cargarFacturas();
 
-        await cargarServicios();
-      } catch (error) {
-        mostrarMensaje(error.message);
-      }
+    } catch (error) {
+        alert('No se pudo actualizar: ' + error.message);
+    }
+}
+
+function verDetalle(factura) {
+    const cliente = factura.cliente?.nombre || 'No disponible';
+
+    let texto = 'FACTURA #' + factura.id + '\n';
+    texto += 'Cliente: ' + cliente + '\n';
+    texto += 'Fecha: ' + fechaLegible(factura.fechaCreacion) + '\n\n';
+    texto += 'SERVICIOS:\n';
+
+    (factura.detalles || []).forEach(detalle => {
+        const nombre = detalle.servicio?.nombre || 'Servicio';
+        texto += nombre + ' | Cantidad: ' + detalle.cantidad;
+        texto += ' | Subtotal: ' + moneda(detalle.subtotal) + '\n';
+    });
+
+    texto += '\nTOTAL: ' + moneda(factura.total);
+    texto += '\nEstado: ' + factura.estado;
+
+    alert(texto);
+}
+
+async function iniciarPanel() {
+    $('listaServicios').innerHTML = '<p class="vacio">Cargando servicios...</p>';
+    $('tablaFacturas').innerHTML = '<tr><td colspan="6">Cargando facturas...</td></tr>';
+
+    const resultados = await Promise.allSettled([
+        cargarServicios(),
+        cargarClientes(),
+        cargarFacturas()
+    ]);
+
+    const errores = resultados.filter(r => r.status === 'rejected');
+
+    if (errores.length) {
+        console.error('Errores de carga:', errores);
+
+        alert(
+            'Algunos datos no pudieron cargarse. Comprueba las rutas del servidor y actualiza la página.'
+        );
     }
 
-    cargarServicios();
-  </script>
+    if (servicios.length && !$('lineasFactura').children.length) {
+        agregarLinea();
+    }
+}
+
+$('agregarLinea').addEventListener('click', agregarLinea);
+$('formFactura').addEventListener('submit', crearFactura);
+$('actualizar').addEventListener('click', async () => {
+    try {
+        await iniciarPanel();
+    } catch (error) {
+        alert(error.message);
+    }
+});
+
+iniciarPanel();
+</script>
+
 </body>
 </html>

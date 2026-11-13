@@ -1,110 +1,219 @@
+
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EVAH - Electrónica Vehicular</title>
+    <meta name="description" content="EVAH: diagnóstico, mantenimiento y programación electrónica vehicular.">
+    <title>EVAH | Electrónica Vehicular</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 
 <body>
 
-    <header>
-        <img src="img/logo--evah.jpg" alt="Logo EVAH" class="logo">
+<header class="encabezado">
+    <a href="#inicio" class="marca">
+        <img src="img/logo--evah.jpg" alt="Logo EVAH">
+        <div>
+            <h1>EVAH</h1>
+            <span>Electrónica Vehicular</span>
+        </div>
+    </a>
 
-        <h1>EVAH</h1>
-        <p>Electrónica Vehicular</p>
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú" aria-expanded="false">
+        ☰
+    </button>
 
-        <nav>
-            <a href="#inicio">Inicio</a>
-            <a href="#nosotros">Nosotros</a>
-            <a href="#servicios">Servicios</a>
-            <a href="#proyectos">Proyectos</a>
-            <a href="#contacto">Contacto</a>
-        </nav>
-    </header>
+    <nav class="navegacion" id="navegacion">
+        <a href="#inicio">Inicio</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proyectos">Proyectos</a>
+        <a href="#contacto" class="nav-contacto">Contacto</a>
+    </nav>
+</header>
 
-    <main>
+<main>
 
-        <section id="inicio">
-            <h2>Electrónica Vehicular EVAH</h2>
+    <section class="hero" id="inicio">
+        <div class="hero-contenido">
+            <span class="etiqueta-superior">TECNOLOGÍA · DIAGNÓSTICO · INNOVACIÓN</span>
+            <h2>La tecnología que impulsa tu vehículo.</h2>
             <p>
-                Mantenimiento y diagnostico de sistemas
-                eléctricos y electrónicos para vehículos.
+                Soluciones en electrónica automotriz, diagnóstico,
+                programación y mantenimiento de sistemas vehiculares.
             </p>
-        </section>
 
-        <section id="nosotros">
-            <h2>Nosotros</h2>
+            <div class="hero-botones">
+                <a href="#servicios" class="boton boton-principal">Conoce nuestros servicios</a>
+                <a href="#contacto" class="boton boton-secundario">Contáctanos</a>
+            </div>
+
+            <div class="hero-datos">
+                <div>
+                    <strong>Diagnóstico</strong>
+                    <span>Electrónico</span>
+                </div>
+                <div>
+                    <strong>Programación</strong>
+                    <span>Vehicular</span>
+                </div>
+                <div>
+                    <strong>Tecnología</strong>
+                    <span>Automotriz</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="hero-imagen">
+            <img src="img/Diagnostico electrobico.jpg" alt="Diagnóstico electrónico vehicular">
+            <div class="imagen-etiqueta">
+                <span class="punto-verde"></span>
+                Soluciones electrónicas para tu vehículo
+            </div>
+        </div>
+    </section>
+
+    <section class="nosotros seccion" id="nosotros">
+        <div class="nosotros-imagen">
+            <img src="img/Programacion ecus.jpg" alt="Programación de módulos electrónicos">
+        </div>
+
+        <div class="nosotros-texto">
+            <span class="etiqueta">CONÓCENOS</span>
+            <h2>Innovación y conocimiento al servicio de tu vehículo.</h2>
             <p>
-                Somos Miguel Tovar y David Caviedes,
-                estudiantes de Ingeniería Mecatrónica,
-                interesados en la electrónica vehicular.
+                Somos Miguel Tovar y David Caviedes, estudiantes de
+                Ingeniería Mecatrónica apasionados por la electrónica
+                automotriz y las nuevas tecnologías.
             </p>
-        </section>
+            <p>
+                EVAH nace con el propósito de aplicar nuestros conocimientos
+                en soluciones de diagnóstico, mantenimiento y programación
+                de sistemas eléctricos y electrónicos vehiculares.
+            </p>
+            <a href="#contacto" class="enlace">Conoce más sobre nosotros →</a>
+        </div>
+    </section>
 
-        <section id="servicios">
-            <h2>Servicios</h2>
-
-            <ul>
-                <li>Escaneo de los sistemas vehiculares</li>
-                <li>Diagnóstico eléctrico y electronico</li>
-                <li>banqueo en banco de pruebas de los modulos</li>
-                <li>programacion y clonacion de ecus </li>
-                <li>programacion de llaves</li>
-            </ul>
-        </section>
-
-        <section id="proyectos">
-
-    <h2>Proyectos</h2>
-
-    <div class="proyecto">
-        <div>
-            <h3>Proyecto 1</h3>
-            <p>Diagnóstico eléctrico y electronico vehicular.</p>
+    <section class="servicios seccion" id="servicios">
+        <div class="encabezado-seccion">
+            <span class="etiqueta">LO QUE HACEMOS</span>
+            <h2>Nuestros servicios</h2>
+            <p>Soluciones especializadas para los sistemas electrónicos de tu vehículo.</p>
         </div>
 
-        <img src="img/Diagnostico electrobico.jpg" alt="Diagnóstico eléctrico">
-    </div>
+        <div class="servicios-grid">
+            <article class="servicio-card">
+                <div class="servicio-icono">⌕</div>
+                <h3>Escaneo vehicular</h3>
+                <p>Lectura de códigos de falla y revisión de los sistemas electrónicos del vehículo.</p>
+            </article>
 
-    <div class="proyecto">
-        <div>
-            <h3>Proyecto 2</h3>
-            <p>Programación y clonación de ECU's.</p>
+            <article class="servicio-card">
+                <div class="servicio-icono">⚡</div>
+                <h3>Diagnóstico electrónico</h3>
+                <p>Identificación de fallas en circuitos, sensores, actuadores y módulos electrónicos.</p>
+            </article>
+
+            <article class="servicio-card">
+                <div class="servicio-icono">⚙</div>
+                <h3>Banco de pruebas</h3>
+                <p>Evaluación y comprobación del funcionamiento de módulos electrónicos.</p>
+            </article>
+
+            <article class="servicio-card">
+                <div class="servicio-icono">⌘</div>
+                <h3>Programación de ECU</h3>
+                <p>Servicios de programación y clonación de unidades de control electrónico.</p>
+            </article>
+
+            <article class="servicio-card">
+                <div class="servicio-icono">🔑</div>
+                <h3>Programación de llaves</h3>
+                <p>Soluciones electrónicas relacionadas con llaves y sistemas de inmovilización.</p>
+            </article>
         </div>
 
-        <img src="img/ecu,s.jpg" alt="Sistema electrónico">
-    </div>
+        <div class="servicios-accion">
+            <a href="#contacto" class="boton boton-principal">Solicitar información</a>
+        </div>
+    </section>
 
-    <div class="proyecto">
-        <div>
-            <h3>Proyecto 3</h3>
-            <p>banqueo de modulos.</p>
+    <section class="proyectos seccion" id="proyectos">
+        <div class="encabezado-seccion">
+            <span class="etiqueta">NUESTRO TRABAJO</span>
+            <h2>Proyectos y experiencias</h2>
+            <p>Conoce algunas de las actividades desarrolladas en electrónica vehicular.</p>
         </div>
 
-        <img src="img/Programacion ecus.jpg" alt="Sistema eléctrico">
-    </div>
+        <div class="proyectos-grid">
+            <article class="proyecto-card">
+                <img src="img/Diagnostico electrobico.jpg" alt="Diagnóstico electrónico">
+                <div class="proyecto-info">
+                    <span>DIAGNÓSTICO</span>
+                    <h3>Diagnóstico eléctrico y electrónico</h3>
+                    <p>Identificación y análisis de fallas en sistemas vehiculares.</p>
+                </div>
+            </article>
 
-</section>
+            <article class="proyecto-card">
+                <img src="img/ecu,s.jpg" alt="Programación y clonación de ECU">
+                <div class="proyecto-info">
+                    <span>PROGRAMACIÓN</span>
+                    <h3>Programación y clonación de ECU</h3>
+                    <p>Trabajo con unidades de control electrónico automotriz.</p>
+                </div>
+            </article>
 
-        <section id="contacto">
-            <h2>Contacto</h2>
+            <article class="proyecto-card">
+                <img src="img/Programacion ecus.jpg" alt="Banco de pruebas de módulos">
+                <div class="proyecto-info">
+                    <span>PRUEBAS</span>
+                    <h3>Banco de pruebas de módulos</h3>
+                    <p>Comprobación y evaluación de módulos electrónicos.</p>
+                </div>
+            </article>
+        </div>
+    </section>
 
-            <p>Correo: tovarmiguel1201@gmail.com</p>
-            <p>WhatsApp: +57 322 770 1520</p>
-            <p>Correo: davidcaviedes499@gmail.com</p>
-            <p>WhatsApp: +57 311 772 7438</p>
-        </section>
+    <section class="contacto seccion" id="contacto">
+        <div class="contacto-contenido">
+            <span class="etiqueta">HABLEMOS</span>
+            <h2>¿Necesitas una solución electrónica para tu vehículo?</h2>
+            <p>Comunícate con nosotros y conoce cómo podemos ayudarte.</p>
 
-    </main>
+            <div class="contactos-grid">
+                <div class="contacto-persona">
+                    <h3>Miguel Tovar</h3>
+                    <p>📧 tovarmiguel1201@gmail.com</p>
+                    <p>📱 +57 322 770 1520</p>
+                    <a href="https://wa.me/573227701520" target="_blank" rel="noopener" class="boton boton-whatsapp">Contactar por WhatsApp</a>
+                </div>
 
-    <footer>
-        <p>© 2026 EVAH - Electrónica Vehicular</p>
-    </footer>
+                <div class="contacto-persona">
+                    <h3>David Caviedes</h3>
+                    <p>📧 davidcaviedes499@gmail.com</p>
+                    <p>📱 +57 311 772 7438</p>
+                    <a href="https://wa.me/573117727438" target="_blank" rel="noopener" class="boton boton-whatsapp">Contactar por WhatsApp</a>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <script src="script.js"></script>
+</main>
+
+<footer class="footer">
+    <a href="#inicio" class="footer-marca">EVAH</a>
+    <p>Electrónica Vehicular · Tecnología e innovación</p>
+    <p>© 2026 EVAH. Todos los derechos reservados.</p>
+    <a href="/admin" class="admin-link">Administración</a>
+</footer>
+
+<script src="script.js"></script>
 
 </body>
 </html>
